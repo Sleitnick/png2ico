@@ -1,0 +1,108 @@
+name: Release
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+jobs:
+  verify-version:
+    name: Verify Version
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          PROJECT_VERSION=${GITHUB_REF#refs/tags/}
+          VERSION=$(<version.txt)
+          echo "CHECKING $PROJECT_VERSION == $VERSION ..."
+          if [ "$PROJECT_VERSION" == "$VERSION" ]; then
+            exit 0
+          fi
+          echo "NOT EQUAL"
+          exit 1
+
+  release:
+    name: Create Release
+    needs: ["verify-version"]
+    runs-on: ubuntu-latest
+    outputs:
+      upload_url: ${{ steps.create_release.outputs.upload_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        with:
+          draft: true
+
+  build:
+    name: Build
+    needs: ["release"]
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - host: linux
+            os: ubuntu-latest
+            target: x86_64-unknown-linux-gnu
+            label: linux
+
+          - host: windows
+            os: windows-latest
+            target: x86_64-pc-windows-msvc
+            label: win64
+
+          - host: macos
+            os: macos-latest
+            target: x86_64-apple-darwin
+            label: macos
+
+          - host: macos
+            os: macos-latest
+            target: aarch64-apple-darwin
+            label: macos-aarch64
+
+    name: Build (${{ matrix.label }})
+    runs-on: ${{ matrix.os }}
+    env:
+      BIN: png2ico
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Get version from tag
+        shell: bash
+        run: |
+          echo "PROJECT_VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_ENV
+          echo "Version is ${{ env.PROJECT_VERSION }}"
+
+      - name: Build Release
+        run: make
+
+      - name: Create Release Archive
+        shell: bash
+        run: |
+          mkdir staging
+
+          if [ "${{ matrix.host }}" = "windows" ]; then
+            cp "build/$BIN.exe" staging/
+            cd staging
+            7z a ../release.zip *
+          else
+            cp "build/$BIN" staging/
+            cd staging
+            zip ../release.zip *
+          fi
+
+      - name: Upload Archive to Release
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ needs.create-release.outputs.upload_url }}
+          asset_path: release.zip
+          asset_name: ${{ env.BIN }}-${{ env.PROJECT_VERSION }}-${{ matrix.label }}.zip
+          asset_content_type: application/octet-stream
+
+      - name: Upload Archive to Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ env.BIN }}-${{ env.PROJECT_VERSION }}-${{ matrix.label }}.zip
+          path: release.zip
