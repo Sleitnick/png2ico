@@ -11,7 +11,7 @@ OBJS := $(SRCS:%.c=$(BUILD_DIR)/%.o)
 INC_FLAGS := -I$(SRC_DIR)
 
 CC = gcc
-CFLAGS = -Os -Wall -Wextra -Wfloat-equal -Wundef -Wshadow \
+CFLAGS = --std=c99 -Os -Wall -Wextra -Wfloat-equal -Wundef -Wshadow \
 	-Wpointer-arith -Wcast-align -Wstrict-prototypes -Wswitch-default \
 	-Wunreachable-code -DPNG2ICO_VERSION='"$(TARGET_VERSION)"'
 
