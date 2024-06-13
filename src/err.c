@@ -1,6 +1,6 @@
 #include "err.h"
 
-const char* err_to_string(int error)
+const char* err_to_string(error_t error)
 {
 	switch (error) {
 		case OK:
