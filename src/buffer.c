@@ -49,7 +49,7 @@ error_t buffer_readi8(Buffer* buf, int8_t* n)
 	return status(r < 1 ? ERR_READ : OK);
 }
 
-error_t buffer_readu8(Buffer* buf, u_int8_t* n)
+error_t buffer_readu8(Buffer* buf, uint8_t* n)
 {
 	size_t r = fread(n, sizeof(unsigned char), 1, buf->f);
 	return status(r < 1 ? ERR_READ : OK);
@@ -61,7 +61,7 @@ error_t buffer_readi16(Buffer* buf, int16_t* n)
 	return status(r < 2 ? ERR_READ : OK);
 }
 
-error_t buffer_readu16(Buffer* buf, u_int16_t* n)
+error_t buffer_readu16(Buffer* buf, uint16_t* n)
 {
 	size_t r = fread(n, sizeof(unsigned char), 2, buf->f);
 	return status(r < 2 ? ERR_READ : OK);
@@ -73,7 +73,7 @@ error_t buffer_readi32(Buffer* buf, int32_t* n)
 	return status(r < 4 ? ERR_READ : OK);
 }
 
-error_t buffer_readu32(Buffer* buf, u_int32_t* n)
+error_t buffer_readu32(Buffer* buf, uint32_t* n)
 {
 	size_t r = fread(n, sizeof(unsigned char), 4, buf->f);
 	return status(r < 4 ? ERR_READ : OK);
@@ -91,7 +91,7 @@ error_t buffer_writei8(Buffer* buf, int8_t n)
 	return status(w < 1 ? ERR_WRITE : OK);
 }
 
-error_t buffer_writeu8(Buffer* buf, u_int8_t n)
+error_t buffer_writeu8(Buffer* buf, uint8_t n)
 {
 	size_t w = fwrite(&n, sizeof(unsigned char), 1, buf->f);
 	return status(w < 1 ? ERR_WRITE : OK);
@@ -103,7 +103,7 @@ error_t buffer_writei16(Buffer* buf, int16_t n)
 	return status(w < 2 ? ERR_WRITE : OK);
 }
 
-error_t buffer_writeu16(Buffer* buf, u_int16_t n)
+error_t buffer_writeu16(Buffer* buf, uint16_t n)
 {
 	size_t w = fwrite(&n, sizeof(unsigned char), 2, buf->f);
 	return status(w < 2 ? ERR_WRITE : OK);
@@ -115,7 +115,7 @@ error_t buffer_writei32(Buffer* buf, int32_t n)
 	return status(w < 4 ? ERR_WRITE : OK);
 }
 
-error_t buffer_writeu32(Buffer* buf, u_int32_t n)
+error_t buffer_writeu32(Buffer* buf, uint32_t n)
 {
 	size_t w = fwrite(&n, sizeof(unsigned char), 4, buf->f);
 	return status(w < 4 ? ERR_WRITE : OK);

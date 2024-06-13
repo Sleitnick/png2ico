@@ -41,10 +41,10 @@ static error_t read_and_verify_header(Buffer* buf)
 	return PNG_OK;
 }
 
-static error_t get_chunk_length_and_type(Buffer* buf, u_int32_t* length, unsigned char chunk_type[4])
+static error_t get_chunk_length_and_type(Buffer* buf, uint32_t* length, unsigned char chunk_type[4])
 {
 	// Chunk length
-	u_int32_t len;
+	uint32_t len;
 	if (buffer_readu32(buf, &len) != OK)
 	{
 		return buffer_status();
@@ -66,7 +66,7 @@ static error_t get_chunk_length_and_type(Buffer* buf, u_int32_t* length, unsigne
 static error_t get_next_chunk(Buffer* buf)
 {
 	// Chunk length and type
-	u_int32_t length;
+	uint32_t length;
 	unsigned char chunk_type[4];
 	if (get_chunk_length_and_type(buf, &length, chunk_type) != OK)
 	{
@@ -85,7 +85,7 @@ static error_t get_next_chunk(Buffer* buf)
 	}
 
 	// CRC
-	u_int32_t crc;
+	uint32_t crc;
 	if (buffer_readu32(buf, &crc) != OK)
 	{
 		return buffer_status();
@@ -98,7 +98,7 @@ static error_t get_next_chunk(Buffer* buf)
 static error_t get_ihdr(Buffer* buf, PngIHDR* ihdr)
 {
 	// Chunk length and type
-	u_int32_t length;
+	uint32_t length;
 	unsigned char chunk_type[4] = { 'A', 'B', 'C', 'D' };
 	if (get_chunk_length_and_type(buf, &length, chunk_type) != OK)
 	{
