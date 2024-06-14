@@ -73,7 +73,7 @@ jobs:
           xmake -v
 
       - name: Build Release
-        if: ${{ ! matrix.host == 'windows' }}
+        if: ${{ matrix.host != 'windows' }}
         run: |
           xmake f --cflags="-DPNG2ICO_VERSION='\"v${{ env.PROJECT_VERSION }}\"'"
           xmake -v

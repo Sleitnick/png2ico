@@ -18,7 +18,7 @@ static void free_png_infos(PngInfo** infos, size_t num)
 
 error_t ico_build(const char* output_filepath, char** input_filepaths, size_t num_inputs)
 {
-	PngInfo** infos = calloc(num_inputs, sizeof(PngInfo*));
+	PngInfo** infos = (PngInfo**)calloc(num_inputs, sizeof(PngInfo*));
 	if (infos == NULL)
 	{
 		return ERR_ALLOC;
@@ -27,7 +27,7 @@ error_t ico_build(const char* output_filepath, char** input_filepaths, size_t nu
 	int alloc_succeed = 1;
 	for (size_t i = 0; i < num_inputs; i++)
 	{
-		infos[i] = malloc(sizeof(PngInfo));
+		infos[i] = (PngInfo*)malloc(sizeof(PngInfo));
 		if (infos[i] == NULL)
 		{
 			alloc_succeed = 0;
