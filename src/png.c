@@ -175,7 +175,7 @@ error_t png_get_info(const char* filepath, PngInfo* info)
 		return ERR_ALLOC;
 	}
 	size_t r = fread(data, f_stat.st_size, 1, buf.f);
-	if (r < f_stat.st_size)
+	if (r < (size_t)f_stat.st_size)
 	{
 		free(data);
 		buffer_close(&buf);
