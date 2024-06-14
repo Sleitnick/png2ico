@@ -24,6 +24,8 @@ error_t buffer_open(const char* filepath, Buffer* buf, int mode)
 		case BUFFER_MODE_WRITE:
 			f = fopen(filepath, "wb");
 			break;
+		default:
+			return status(ERR_OPEN_FILE);
 	}
 	if (f == NULL)
 	{
