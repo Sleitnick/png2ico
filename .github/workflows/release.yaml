@@ -20,7 +20,7 @@ jobs:
           echo "NOT EQUAL"
           exit 1
 
-  release:
+  create-release:
     name: Create Release
     needs: ["verify-version"]
     runs-on: ubuntu-latest
@@ -34,7 +34,7 @@ jobs:
           draft: true
 
   build:
-    needs: ["release"]
+    needs: ["create-release"]
     strategy:
       fail-fast: false
       matrix:
