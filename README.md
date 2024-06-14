@@ -2,6 +2,9 @@
 
 The `png2ico` command line tool converts a list of PNG files into a single ICO file.
 
+## Install
+Download the latest release binary for your given platform.
+
 ## Usage
 ```sh
 # Convert a list of PNGs to a single ICO file:

@@ -36,3 +36,5 @@ declare function target(target: string): ()
 declare function set_kind(kind: string): ()
 
 declare function add_files(...: string): ()
+declare function add_cflags(...: string): ()
+declare function add_defines(...: string): ()

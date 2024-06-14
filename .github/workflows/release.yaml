@@ -5,24 +5,8 @@ on:
       - "v*.*.*"
 
 jobs:
-  verify-version:
-    name: Verify Version
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - run: |
-          PROJECT_VERSION=${GITHUB_REF#refs/tags/}
-          VERSION=$(<version.txt)
-          echo "CHECKING $PROJECT_VERSION == $VERSION ..."
-          if [ "$PROJECT_VERSION" == "$VERSION" ]; then
-            exit 0
-          fi
-          echo "NOT EQUAL"
-          exit 1
-
   create-release:
     name: Create Release
-    needs: ["verify-version"]
     runs-on: ubuntu-latest
     outputs:
       upload_url: ${{ steps.create_release.outputs.upload_url }}
@@ -83,7 +67,9 @@ jobs:
           actions-cache-folder: '.xmake-cache'
 
       - name: Build Release
-        run: xmake -v
+        run: |
+          xmake f --cflags="-DPNG2ICO_VERSION='\"v${{ env.PROJECT_VERSION }}\"'"
+          xmake -v
 
       - name: Create Release Archive
         shell: bash

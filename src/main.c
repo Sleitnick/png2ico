@@ -5,12 +5,12 @@
 #include "err.h"
 
 #ifndef PNG2ICO_VERSION
-#define PNG2ICO_VERSION ""
+#define PNG2ICO_VERSION "unknown version"
 #endif
 
-static void print_help(void)
+static void print_help(int include_title)
 {
-	printf("PNG to ICO\n\nUsage: png2ico output.ico input1.png [input2.png]...\n\n");
+	printf("%sUsage: png2ico output.ico input1.png [input2.png]...\n\n", (include_title ? "PNG to ICO\n\n" : ""));
 }
 
 static void print_version(void)
@@ -32,7 +32,7 @@ int main(int argc, char** argv)
 {
 	if (argc == 2 && (strcmp(argv[1], "--help") == 0 || strcmp(argv[1], "-h") == 0))
 	{
-		print_help();
+		print_help(1);
 		return 0;
 	}
 
@@ -45,24 +45,24 @@ int main(int argc, char** argv)
 	// Verify output exists
 	if (argc <= 1)
 	{
-		printf("no output file argument found\n\n");
-		print_help();
+		printf("No output file argument found\n\n");
+		print_help(0);
 		return 1;
 	}
 
 	// Verify output ends with .ico:
 	if (!ends_with(argv[1], ".ico"))
 	{
-		printf("output file extension must be \".ico\"\n\n");
-		print_help();
+		printf("Output file extension must be \".ico\"\n\n");
+		print_help(0);
 		return 1;
 	}
 
 	// Verify there are any input files:
 	if (argc <= 2)
 	{
-		printf("no input file arguments found\n\n");
-		print_help();
+		printf("No input file arguments found\n\n");
+		print_help(0);
 		return 1;
 	}
 
@@ -72,8 +72,8 @@ int main(int argc, char** argv)
 		const char* input = argv[i];
 		if (!ends_with(input, ".png"))
 		{
-			printf("input file must end with \".png\": %s\n\n", input);
-			print_help();
+			printf("Input file must end with \".png\": %s\n\n", input);
+			print_help(0);
 			return 1;
 		}
 	}
