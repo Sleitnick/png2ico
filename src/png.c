@@ -100,7 +100,7 @@ static error_t get_next_chunk(Buffer* buf)
 static error_t get_ihdr(Buffer* buf, PngIHDR* ihdr)
 {
 	// Chunk length and type
-	uint32_t length;
+	uint32_t length = 0;
 	unsigned char chunk_type[4] = { 'A', 'B', 'C', 'D' };
 	if (get_chunk_length_and_type(buf, &length, chunk_type) != OK)
 	{
@@ -158,6 +158,7 @@ error_t png_get_info(const char* filepath, PngInfo* info)
 	int ihdr_status = get_ihdr(&buf, &info->ihdr);
 	if (ihdr_status != OK)
 	{
+		buffer_close(&buf);
 		return ERR_PNG_INVALID;
 	}
 
@@ -170,9 +171,16 @@ error_t png_get_info(const char* filepath, PngInfo* info)
 	void* data = malloc(sizeof(char) * f_stat.st_size);
 	if (data == NULL)
 	{
+		buffer_close(&buf);
 		return ERR_ALLOC;
 	}
-	fread(data, f_stat.st_size, 1, buf.f);
+	size_t r = fread(data, f_stat.st_size, 1, buf.f);
+	if (r < f_stat.st_size)
+	{
+		free(data);
+		buffer_close(&buf);
+		return ERR_READ;
+	}
 	info->data = data;
 	info->data_size = f_stat.st_size;
 
