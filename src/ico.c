@@ -47,7 +47,7 @@ error_t ico_build(const char* output_filepath, char** input_filepaths, size_t nu
 		const char* input = input_filepaths[i];
 		PngInfo* info = infos[i];
 		int png_err = png_get_info(input, info);
-		if (png_err != PNG_OK)
+		if (png_err != OK)
 		{
 			free_png_infos(infos, num_inputs);
 			return png_err;
