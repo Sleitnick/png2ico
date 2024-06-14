@@ -3,7 +3,23 @@
 The `png2ico` command line tool converts a list of PNG files into a single ICO file.
 
 ## Install
-Download the latest release binary for your given platform.
+Below are two diferent ways to install the tool.
+### Manual Installation
+1. Download the latest release binary for your given platform.
+1. Extract the binary from the zip file.
+1. Place the binary in your desired directory.
+1. Point your path environment variable to the binary's location.
+
+Test out the installation by outputting the version:
+```sh
+$ png2ico --version
+```
+
+### Aftman
+Use [`aftman`](https://github.com/LPGhatguy/aftman) to install the binary.
+```sh
+aftman add Sleitnick/png2ico@0.1.1
+```
 
 ## Usage
 ```sh
@@ -23,10 +39,14 @@ I needed to generate an ICO file for a Godot application. All the other tools to
 This tool has been written specifically for the given task of generating an ICO file from a series of PNG files. There are no external libraries outside of the standard C library. The PNG decoder is only implemented to decode the necessary parts of the PNG in order to generate the ICO file. As such, the generated binary is nice and small.
 
 ## Build from Source
-Run the Makefile to build the project. The output will be `build/png2ico`.
+Run [`xmake`](https://xmake.io/) within the project's root directory.
 ```sh
-# Run `make` from within the root project directory:
-$ make
+$ xmake
+```
+
+Test the build:
+```sh
+$ xmake run png2ico --version
 ```
 
 ## Project Structure
