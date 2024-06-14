@@ -101,7 +101,7 @@ static error_t get_ihdr(Buffer* buf, PngIHDR* ihdr)
 {
 	// Chunk length and type
 	uint32_t length = 0;
-	unsigned char chunk_type[4] = { 'A', 'B', 'C', 'D' };
+	unsigned char chunk_type[4];
 	if (get_chunk_length_and_type(buf, &length, chunk_type) != OK)
 	{
 		return buffer_status();
@@ -109,12 +109,14 @@ static error_t get_ihdr(Buffer* buf, PngIHDR* ihdr)
 
 	// Verify chunk type
 	unsigned char chunk_type_expected[4] = { 'I', 'H', 'D', 'R' };
-	if (memcmp(chunk_type, chunk_type_expected, sizeof(chunk_type)) != 0) {
+	if (memcmp(chunk_type, chunk_type_expected, sizeof(chunk_type)) != 0)
+	{
 		return ERR_PNG_INVALID;
 	}
 
 	// Verify chunk length
-	if (length != 13) {
+	if (length != 13)
+	{
 		return ERR_PNG_INVALID;
 	}
 

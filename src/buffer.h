@@ -11,7 +11,6 @@
 typedef struct Buffer
 {
 	FILE* f;
-
 } Buffer;
 
 error_t buffer_open(const char* filepath, Buffer* buf, int mode);
