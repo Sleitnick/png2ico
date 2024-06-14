@@ -50,10 +50,10 @@ jobs:
             os: windows-latest
             target: x86_64-pc-windows-msvc
             label: win64
-            build: build/windows/x86_64/release
+            build: build/windows/x64/release
 
           - host: macos
-            os: macos-latest
+            os: macos-13
             target: x86_64-apple-darwin
             label: macos
             build: build/macosx/x86_64/release
