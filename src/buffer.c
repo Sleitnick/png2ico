@@ -3,6 +3,10 @@
 #include <stdlib.h>
 #include <string.h>
 
+#ifdef _WIN32
+#include <errno.h>
+#endif
+
 #define ASSERT_READ(f, bytes_read, expected_size) (bytes_read < expected_size ? (feof(f) ? ERR_EOF : ferror(f) ? ERR_READ : OK) : OK)
 #define ASSERT_WRITE(f, bytes_written, expected_size) (bytes_written < expected_size ? (feof(f) ? ERR_EOF : ferror(f) ? ERR_WRITE : OK) : OK)
 
@@ -17,6 +21,22 @@ static error_t status(int s)
 error_t buffer_open(const char* filepath, Buffer* buf, int mode)
 {
 	FILE* f = NULL;
+	
+#ifdef _WIN32
+	errno_t e;
+	switch (mode) {
+		case BUFFER_MODE_READ:
+			e = fopen_s(f, filepath, "rb");
+		case BUFFER_MODE_WRITE:
+			e = fopen_s(f, filepath, "wb");
+		default:
+			return status(ERR_OPEN_FILE);
+	}
+	if (e != 0)
+	{
+		return status(ERR_OPEN_FILE);
+	}
+#else
 	switch (mode) {
 		case BUFFER_MODE_READ:
 			f = fopen(filepath, "rb");
@@ -31,6 +51,7 @@ error_t buffer_open(const char* filepath, Buffer* buf, int mode)
 	{
 		return status(ERR_OPEN_FILE);
 	}
+#endif
 
 	buf->f = f;
 
