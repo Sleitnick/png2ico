@@ -34,7 +34,6 @@ jobs:
           draft: true
 
   build:
-    name: Build
     needs: ["release"]
     strategy:
       fail-fast: false
