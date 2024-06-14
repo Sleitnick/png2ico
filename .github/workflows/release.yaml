@@ -44,21 +44,25 @@ jobs:
             os: ubuntu-latest
             target: x86_64-unknown-linux-gnu
             label: linux
+            build: build/linux/x86_64/release
 
           - host: windows
             os: windows-latest
             target: x86_64-pc-windows-msvc
             label: win64
+            build: build/windows/x86_64/release
 
           - host: macos
             os: macos-latest
             target: x86_64-apple-darwin
             label: macos
+            build: build/macosx/x86_64/release
 
           - host: macos
             os: macos-latest
             target: aarch64-apple-darwin
             label: macos-aarch64
+            build: build/macosx/arm64/release
 
     name: Build (${{ matrix.label }})
     runs-on: ${{ matrix.os }}
@@ -72,9 +76,13 @@ jobs:
         run: |
           echo "PROJECT_VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_ENV
           echo "Version is ${{ env.PROJECT_VERSION }}"
+     
+      - uses: xmake-io/github-action-setup-xmake@v1
+        with:
+          xmake-version: latest
 
       - name: Build Release
-        run: make
+        run: xmake
 
       - name: Create Release Archive
         shell: bash
@@ -82,11 +90,11 @@ jobs:
           mkdir staging
 
           if [ "${{ matrix.host }}" = "windows" ]; then
-            cp "build/$BIN.exe" staging/
+            cp "${{ matrix.build }}/$BIN.exe" staging/
             cd staging
             7z a ../release.zip *
           else
-            cp "build/$BIN" staging/
+            cp "${{ matrix.build }}/$BIN" staging/
             cd staging
             zip ../release.zip *
           fi
