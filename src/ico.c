@@ -75,21 +75,21 @@ error_t ico_build(const char* output_filepath, char** input_filepaths, size_t nu
 	// Header
 	buffer_writeu16(&buf, 0); // Reserved; always 0
 	buffer_writeu16(&buf, 1); // ICO type (1 = ICO, 2 = CUR)
-	buffer_writeu16(&buf, num_inputs); // Number of files
+	buffer_writeu16(&buf, (uint16_t)num_inputs); // Number of files
 
 	// Write icon entries:
 	size_t offset = 6 + 16 * num_inputs;
 	for (size_t i = 0; i < num_inputs; i++)
 	{
 		PngInfo* info = infos[i];
-		buffer_writeu8(&buf, info->ihdr.width);
-		buffer_writeu8(&buf, info->ihdr.height);
+		buffer_writeu8(&buf, (uint8_t)info->ihdr.width);
+		buffer_writeu8(&buf, (uint8_t)info->ihdr.height);
 		buffer_writeu8(&buf, 0); // Colors in color palette (TODO)
 		buffer_writeu8(&buf, 0); // Reserved; always 0
 		buffer_writeu16(&buf, 0); // Color plane
 		buffer_writeu16(&buf, info->ihdr.bit_depth); // Bits per pixel
-		buffer_writeu32(&buf, info->data_size); // Image data size
-		buffer_writeu32(&buf, offset); // Image data size
+		buffer_writeu32(&buf, (uint32_t)info->data_size); // Image data size
+		buffer_writeu32(&buf, (uint32_t)offset); // Image data size
 		offset += info->data_size;
 	}
 
