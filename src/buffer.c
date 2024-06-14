@@ -21,14 +21,14 @@ static error_t status(int s)
 error_t buffer_open(const char* filepath, Buffer* buf, int mode)
 {
 	FILE* f = NULL;
-	
+
 #ifdef _WIN32
 	errno_t e;
 	switch (mode) {
 		case BUFFER_MODE_READ:
-			e = fopen_s(f, filepath, "rb");
+			e = fopen_s(&f, filepath, "rb");
 		case BUFFER_MODE_WRITE:
-			e = fopen_s(f, filepath, "wb");
+			e = fopen_s(&f, filepath, "wb");
 		default:
 			return status(ERR_OPEN_FILE);
 	}
