@@ -69,7 +69,7 @@ jobs:
       - name: Build Release (Windows)
         if: ${{ matrix.host == 'windows' }}
         run: |
-          xmake f --cflags=-DPNG2ICO_VERSION="\\\"v${{ env.PROJECT_VERSION }}\\\""
+          xmake f --cflags=-DPNG2ICO_VERSION="""v${{ env.PROJECT_VERSION }}"""
           xmake -v
 
       - name: Build Release

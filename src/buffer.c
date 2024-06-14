@@ -27,8 +27,10 @@ error_t buffer_open(const char* filepath, Buffer* buf, int mode)
 	switch (mode) {
 		case BUFFER_MODE_READ:
 			e = fopen_s(&f, filepath, "rb");
+			break;
 		case BUFFER_MODE_WRITE:
 			e = fopen_s(&f, filepath, "wb");
+			break;
 		default:
 			return status(ERR_OPEN_FILE);
 	}
