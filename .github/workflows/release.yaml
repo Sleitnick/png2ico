@@ -80,9 +80,10 @@ jobs:
       - uses: xmake-io/github-action-setup-xmake@v1
         with:
           xmake-version: latest
+          actions-cache-folder: '.xmake-cache'
 
       - name: Build Release
-        run: xmake
+        run: xmake -v
 
       - name: Create Release Archive
         shell: bash
