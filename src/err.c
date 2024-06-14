@@ -17,6 +17,10 @@ const char* err_to_string(error_t error)
 			return "Failed to write";
 		case ERR_PNG_TOO_BIG:
 			return "PNG file exceeds maximum size for ICO (256x256 pixels)";
+		case ERR_PNG_INVALID:
+			return "Invalid PNG file";
+		case ERR_NULL:
+			return "Unexpected null pointer";
 		default:
 			return "Unknown error";
 	}

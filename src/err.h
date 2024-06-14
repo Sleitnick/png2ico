@@ -8,6 +8,8 @@
 #define ERR_READ 4
 #define ERR_WRITE 5
 #define ERR_PNG_TOO_BIG 6
+#define ERR_PNG_INVALID 7
+#define ERR_NULL 8
 
 typedef int error_t;
 

@@ -22,9 +22,11 @@ static error_t read_and_verify_header(Buffer* buf)
 	{
 		switch (header_res) {
 			case ERR_EOF:
-				return PNG_ERR_READ_EOF;
+				return ERR_EOF;
 			case ERR_READ:
-				return PNG_ERR_READ_ERR;
+				return ERR_READ;
+			default:
+				break;
 		}
 	}
 
@@ -34,11 +36,11 @@ static error_t read_and_verify_header(Buffer* buf)
 	{
 		if (header[i] != expected_header[i])
 		{
-			return PNG_ERR_INVALID_PNG;
+			return ERR_PNG_INVALID;
 		}
 	}
 
-	return PNG_OK;
+	return OK;
 }
 
 static error_t get_chunk_length_and_type(Buffer* buf, uint32_t* length, unsigned char chunk_type[4])
@@ -108,12 +110,12 @@ static error_t get_ihdr(Buffer* buf, PngIHDR* ihdr)
 	// Verify chunk type
 	unsigned char chunk_type_expected[4] = { 'I', 'H', 'D', 'R' };
 	if (memcmp(chunk_type, chunk_type_expected, sizeof(chunk_type)) != 0) {
-		return PNG_ERR_INVALID_PNG;
+		return ERR_PNG_INVALID;
 	}
 
 	// Verify chunk length
 	if (length != 13) {
-		return PNG_ERR_INVALID_PNG;
+		return ERR_PNG_INVALID;
 	}
 
 	// Read IHDR data
@@ -129,34 +131,34 @@ static error_t get_ihdr(Buffer* buf, PngIHDR* ihdr)
 	ihdr->width = SWAP_32(ihdr->width);
 	ihdr->height = SWAP_32(ihdr->height);
 
-	return PNG_OK;
+	return OK;
 }
 
 error_t png_get_info(const char* filepath, PngInfo* info)
 {
 	if (info == NULL)
 	{
-		return PNG_ERR_PNG_INFO_NULL;
+		return ERR_NULL;
 	}
 
 	Buffer buf;
 	if (buffer_open(filepath, &buf, BUFFER_MODE_READ) != OK)
 	{
 		buffer_close(&buf);
-		return PNG_ERR_FAILED_TO_OPEN;
+		return ERR_OPEN_FILE;
 	}
 
 	int verify_header = read_and_verify_header(&buf);
-	if (verify_header != PNG_OK)
+	if (verify_header != OK)
 	{
 		buffer_close(&buf);
 		return verify_header;
 	}
 
 	int ihdr_status = get_ihdr(&buf, &info->ihdr);
-	if (ihdr_status != PNG_OK)
+	if (ihdr_status != OK)
 	{
-		return PNG_ERR_INVALID_PNG;
+		return ERR_PNG_INVALID;
 	}
 
 	// Stop here. Nothing more than IHDR chunk is needed.
@@ -168,21 +170,21 @@ error_t png_get_info(const char* filepath, PngInfo* info)
 	void* data = malloc(sizeof(char) * f_stat.st_size);
 	if (data == NULL)
 	{
-		return PNG_ERR_ALLOC;
+		return ERR_ALLOC;
 	}
 	fread(data, f_stat.st_size, 1, buf.f);
 	info->data = data;
 	info->data_size = f_stat.st_size;
 
 	buffer_close(&buf);
-	return PNG_OK;
+	return OK;
 }
 
 error_t png_get_width_height(const char* filepath, int* width, int* height)
 {
 	PngInfo info;
 	int err = png_get_info(filepath, &info);
-	if (err != PNG_OK)
+	if (err != OK)
 	{
 		return err;
 	}
@@ -192,7 +194,7 @@ error_t png_get_width_height(const char* filepath, int* width, int* height)
 
 	png_free_info(&info);
 
-	return PNG_OK;
+	return OK;
 }
 
 void png_free_info(PngInfo* info)

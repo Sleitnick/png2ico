@@ -5,14 +5,6 @@
 #include <stdlib.h>
 #include "err.h"
 
-#define PNG_OK 0
-#define PNG_ERR_PNG_INFO_NULL 1
-#define PNG_ERR_FAILED_TO_OPEN 2
-#define PNG_ERR_READ_EOF 3
-#define PNG_ERR_READ_ERR 4
-#define PNG_ERR_INVALID_PNG 5
-#define PNG_ERR_ALLOC 6
-
 typedef struct PngIHDR
 {
 	uint32_t width;
