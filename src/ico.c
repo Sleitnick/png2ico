@@ -100,6 +100,7 @@ error_t ico_build(const char* output_filepath, char** input_filepaths, size_t nu
 		buffer_writechunk(&buf, sizeof(unsigned char), info->data_size, info->data);
 	}
 
+	buffer_close(&buf);
 	free_png_infos(infos, num_inputs);
 
 	return OK;

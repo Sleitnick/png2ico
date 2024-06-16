@@ -20,27 +20,12 @@ static error_t read_and_verify_header(Buffer* buf)
 	int header_res = buffer_readchunk(buf, sizeof(unsigned char), 8, header);
 	if (header_res != OK)
 	{
-		switch (header_res) {
-			case ERR_EOF:
-				return ERR_EOF;
-			case ERR_READ:
-				return ERR_READ;
-			default:
-				break;
-		}
+		return header_res;
 	}
 
 	// Verify the header: 89 50 4E 47 0D 0A 1A 0A
-	unsigned char expected_header[8] = { 0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a };
-	for (int i = 0; i < 8; i++)
-	{
-		if (header[i] != expected_header[i])
-		{
-			return ERR_PNG_INVALID;
-		}
-	}
-
-	return OK;
+	static unsigned char expected_header[8] = { 0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a };
+	return memcmp(header, expected_header, 8) == 0 ? OK : ERR_PNG_INVALID;
 }
 
 static error_t get_chunk_length_and_type(Buffer* buf, uint32_t* length, unsigned char chunk_type[4])
