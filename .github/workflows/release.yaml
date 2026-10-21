@@ -83,7 +83,7 @@ jobs:
           asset_content_type: application/octet-stream
 
       - name: Upload Archive to Artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v7
         with:
           name: ${{ env.BIN }}-${{ env.PROJECT_VERSION }}-${{ matrix.label }}.zip
           path: release.zip
