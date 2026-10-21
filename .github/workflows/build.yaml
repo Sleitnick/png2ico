@@ -6,8 +6,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: xmake-io/github-action-setup-xmake@v1
-        with:
-          xmake-version: latest
-          actions-cache-folder: '.xmake-cache'
-      - run: xmake
+      - name: Config
+        run: cmake -S . -B out -DCMAKE_BUILD_TYPE=Debug
+      - name: Build
+        run: cmake --build out -j --config Debug

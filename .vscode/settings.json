@@ -6,7 +6,9 @@
 		"tuple": "c",
 		"variant": "c"
 	},
-	"luau-lsp.types.definitionFiles": [
-		"types.d.lua"
-	]
+	"luau-lsp.types.definitionFiles": {
+		"types": "types.d.lua"
+	},
+	"luau-lsp.sourcemap.enabled": false,
+	"stylua.targetReleaseVersion": "latest"
 }

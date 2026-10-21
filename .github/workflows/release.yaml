@@ -28,25 +28,21 @@ jobs:
             os: ubuntu-latest
             target: x86_64-unknown-linux-gnu
             label: linux
-            build: build/linux/x86_64/release
 
           - host: windows
             os: windows-latest
             target: x86_64-pc-windows-msvc
             label: win64
-            build: build/windows/x64/release
 
           - host: macos
             os: macos-13
             target: x86_64-apple-darwin
             label: macos
-            build: build/macosx/x86_64/release
 
           - host: macos
             os: macos-latest
             target: aarch64-apple-darwin
             label: macos-aarch64
-            build: build/macosx/arm64/release
 
     name: Build (${{ matrix.label }})
     runs-on: ${{ matrix.os }}
@@ -55,19 +51,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Get version from tag
-        shell: bash
-        run: |
-          echo "PROJECT_VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_ENV
-          echo "Version is ${{ env.PROJECT_VERSION }}"
-     
-      - uses: xmake-io/github-action-setup-xmake@v1
-        with:
-          xmake-version: latest
-          actions-cache-folder: '.xmake-cache'
+      - name: Config
+        run: cmake -S . -B out -DCMAKE_BUILD_TYPE=Release
 
-      - name: Build Release
-        run: xmake -v
+      - name: Build
+        run: cmake --build out -j --config Release
 
       - name: Create Release Archive
         shell: bash
@@ -75,11 +63,11 @@ jobs:
           mkdir staging
 
           if [ "${{ matrix.host }}" = "windows" ]; then
-            cp "${{ matrix.build }}/$BIN.exe" staging/
+            cp "out/src/Release/$BIN.exe" staging/
             cd staging
             7z a ../release.zip *
           else
-            cp "${{ matrix.build }}/$BIN" staging/
+            cp "out/src/Release/$BIN" staging/
             cd staging
             zip ../release.zip *
           fi

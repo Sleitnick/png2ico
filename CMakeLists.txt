@@ -1,0 +1,43 @@
+cmake_minimum_required(VERSION 3.16)
+
+set(CMAKE_POLICY_DEFAULT_CMP0077 NEW)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
+set(CMAKE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/$<CONFIGURATION>")
+
+project(
+	png2ico
+	VERSION 0.1.2
+	DESCRIPTION "Convert PNGs into a single ICO file"
+)
+
+set(EXECUTABLE_NAME ${PROJECT_NAME})
+
+set(BUILD_OPTIONS)
+
+if (MSVC)
+	list(APPEND BUILD_OPTIONS /DNOMINMAX)
+	list(APPEND BUILD_OPTIONS /D_CRT_SECURE_NO_WARNINGS)
+	list(APPEND BUILD_OPTIONS "/we4018")
+	list(APPEND BUILD_OPTIONS "/we4388")
+	list(APPEND BUILD_OPTIONS "/Zc:externConstexpr")
+	if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+		list(APPEND BUILD_OPTIONS "/EHsc")
+	endif()
+	if (NOT CMAKE_GENERATOR STREQUAL "Ninja")
+		add_definitions(/MP)
+	endif()
+else()
+	list(APPEND BUILD_OPTIONS -Wall)
+	list(APPEND BUILD_OPTIONS -Wimplicit-fallthrough)
+	list(APPEND BUILD_OPTIONS -Wsign-compare)
+	list(APPEND BUILD_OPTIONS -Werror)
+	list(APPEND BUILD_OPTIONS -Wno-unused-function)
+	if (NOT WIN32)
+		list(APPEND BUILD_OPTIONS -fPIC)
+	endif()
+endif()
+
+set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT "${LIBRARY_NAME}")
+
+add_subdirectory(src)

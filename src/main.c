@@ -1,11 +1,10 @@
 #include <stdio.h>
 #include <string.h>
-#include "png.h"
 #include "ico.h"
 #include "err.h"
 
-#ifndef PNG2ICO_VERSION
-#define PNG2ICO_VERSION "unknown version"
+#ifndef PROJECT_VERSION
+#define PROJECT_VERSION "unknown version"
 #endif
 
 static void print_help(int include_title)
@@ -15,7 +14,7 @@ static void print_help(int include_title)
 
 static void print_version(void)
 {
-	printf("png2ico %s\n", PNG2ICO_VERSION);
+	printf("png2ico %s\n", PROJECT_VERSION);
 }
 
 static int ends_with(const char* str, const char* ending)
