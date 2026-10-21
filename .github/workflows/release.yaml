@@ -51,6 +51,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Get version from tag
+        shell: bash
+        run: |
+          echo "PROJECT_VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_ENV
+          echo "Version is ${{ env.PROJECT_VERSION }}"
+
       - name: Config
         run: cmake -S . -B out -DCMAKE_BUILD_TYPE=Release
 
