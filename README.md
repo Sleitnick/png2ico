@@ -18,7 +18,7 @@ $ png2ico --version
 ### Aftman
 Use [`aftman`](https://github.com/LPGhatguy/aftman) to install the binary.
 ```sh
-aftman add Sleitnick/png2ico@0.1.1
+aftman add Sleitnick/png2ico@0.1.2
 ```
 
 ## Usage
@@ -39,14 +39,11 @@ I needed to generate an ICO file for a Godot application. All the other tools to
 This tool has been written specifically for the given task of generating an ICO file from a series of PNG files. There are no external libraries outside of the standard C library. The PNG decoder is only implemented to decode the necessary parts of the PNG in order to generate the ICO file. As such, the generated binary is nice and small.
 
 ## Build from Source
-Run [`xmake`](https://xmake.io/) within the project's root directory.
-```sh
-$ xmake
-```
+CMake is used to build the project.
 
-Test the build:
 ```sh
-$ xmake run png2ico --version
+$ cmake -S . -B out -DCMAKE_BUILD_TYPE=Debug
+$ cmake --build out -j
 ```
 
 ## Project Structure
