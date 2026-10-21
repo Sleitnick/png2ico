@@ -63,11 +63,11 @@ jobs:
           mkdir staging
 
           if [ "${{ matrix.host }}" = "windows" ]; then
-            cp "out/src/Release/$BIN.exe" staging/
+            cp "out/Release/$BIN.exe" staging/
             cd staging
             7z a ../release.zip *
           else
-            cp "out/src/Release/$BIN" staging/
+            cp "out/Release/$BIN" staging/
             cd staging
             zip ../release.zip *
           fi
