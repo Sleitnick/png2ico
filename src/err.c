@@ -20,6 +20,8 @@ const char* err_to_string(error_t error) {
 		return "Invalid PNG file";
 	case ERR_NULL:
 		return "Unexpected null pointer";
+	case ERR_STAT_FILE:
+		return "Failed to read file information";
 	default:
 		return "Unknown error";
 	}

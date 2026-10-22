@@ -145,7 +145,11 @@ error_t png_get_info(const char* filepath, PngInfo* info) {
 	// Read in the full file
 	rewind(buf.f);
 	struct stat f_stat;
-	stat(filepath, &f_stat);
+	int stat_err = stat(filepath, &f_stat);
+	if (stat_err) {
+		buffer_close(&buf);
+		return ERR_STAT_FILE;
+	}
 	void* data = malloc(sizeof(char) * f_stat.st_size);
 	if (data == NULL) {
 		buffer_close(&buf);
