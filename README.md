@@ -18,7 +18,7 @@ $ png2ico --version
 ### Aftman
 Use [`aftman`](https://github.com/LPGhatguy/aftman) to install the binary.
 ```sh
-aftman add Sleitnick/png2ico@0.1.2
+aftman add Sleitnick/png2ico@0.1.3
 ```
 
 ## Usage

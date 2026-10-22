@@ -11,7 +11,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/cmake)
 
 project(
 	png2ico
-	VERSION 0.1.2
+	VERSION 0.1.3
 	DESCRIPTION "Convert PNGs into a single ICO file"
 )
 
