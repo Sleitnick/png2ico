@@ -4,12 +4,12 @@
 #define BUFFER_MODE_READ 0
 #define BUFFER_MODE_WRITE 1
 
-#include <stdio.h>
-#include <stdint.h>
 #include "err.h"
 
-typedef struct Buffer
-{
+#include <stdint.h>
+#include <stdio.h>
+
+typedef struct Buffer {
 	FILE* f;
 } Buffer;
 

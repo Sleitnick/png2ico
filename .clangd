@@ -1,0 +1,19 @@
+CompileFlags:
+    CompilationDatabase: "./out"
+
+InlayHints:
+    Enabled: true
+    BlockEnd: false
+    Designators: true
+    ParameterNames: false
+    DeducedTypes: true
+    DefaultArguments: true
+    TypeNameLimit: 24
+
+---
+
+If:
+  PathMatch: _deps/.*
+
+Diagnostics:
+  Suppress: "*"

@@ -1,0 +1,37 @@
+BasedOnStyle: Google
+
+AccessModifierOffset: -4
+AlignTrailingComments: Never
+AllowShortBlocksOnASingleLine: Empty
+AllowShortCaseLabelsOnASingleLine: false
+AllowShortFunctionsOnASingleLine: Empty
+AllowShortLambdasOnASingleLine: Empty
+AllowShortIfStatementsOnASingleLine: Never
+AllowShortLoopsOnASingleLine: false
+BreakConstructorInitializers: BeforeComma
+BreakInheritanceList: BeforeComma
+ColumnLimit: 120
+IndentCaseLabels: false
+IndentWidth: 4
+TabWidth: 4
+UseTab: Always
+PointerAlignment: Left
+SpaceAfterTemplateKeyword: false
+SpacesBeforeTrailingComments: 1
+AlignEscapedNewlines: DontAlign
+AlwaysBreakTemplateDeclarations: Yes
+MaxEmptyLinesToKeep: 5
+AllowAllParametersOfDeclarationOnNextLine: false
+AlignAfterOpenBracket: BlockIndent
+BinPackArguments: false
+BinPackParameters: false
+PenaltyReturnTypeOnItsOwnLine: 10000
+LineEnding: LF
+IncludeBlocks: Regroup
+IncludeCategories:
+  - Regex: ^".*"$
+    Priority: 1
+  - Regex: ^<.*\.h>$
+    Priority: 2
+  - Regex: ^<.*>$
+    Priority: 3

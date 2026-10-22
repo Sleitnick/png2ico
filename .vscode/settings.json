@@ -6,6 +6,17 @@
 		"tuple": "c",
 		"variant": "c"
 	},
+	"C_Cpp.formatting": "clangFormat",
+	"C_Cpp.default.cStandard": "c99",
+	"C_Cpp.intelliSenseEngine": "disabled",
+	"[c]": {
+		"editor.formatOnSave": true,
+		"editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd"
+	},
+	"[cpp]": {
+		"editor.formatOnSave": true,
+		"editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd"
+	},
 	"luau-lsp.types.definitionFiles": {
 		"types": "types.d.lua"
 	},

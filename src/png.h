@@ -1,12 +1,12 @@
 #ifndef _PNG_H_
 #define _PNG_H_
 
-#include <stdint.h>
-#include <stdlib.h>
 #include "err.h"
 
-typedef struct PngIHDR
-{
+#include <stdint.h>
+#include <stdlib.h>
+
+typedef struct PngIHDR {
 	uint32_t width;
 	uint32_t height;
 	uint8_t bit_depth;
@@ -16,15 +16,13 @@ typedef struct PngIHDR
 	uint8_t interlace_method;
 } PngIHDR;
 
-typedef struct PngInfo
-{
+typedef struct PngInfo {
 	PngIHDR ihdr;
 	size_t data_size;
 	void* data;
 } PngInfo;
 
-typedef struct PngChunk
-{
+typedef struct PngChunk {
 	size_t length;
 	unsigned char chunk_type[4];
 	unsigned char* chunk_data;

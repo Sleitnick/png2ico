@@ -1,0 +1,12 @@
+Checks:
+  - -*
+  - readability-braces-around-statements
+  - readability-redundant-member-init
+  - readability-operators-representation
+HeaderFileExtensions: ["", h, hh, hpp, hxx, inc, glsl]
+ImplementationFileExtensions: [c, cc, cpp, cxx, m, mm, java]
+HeaderFilterRegex: (core|doc|drivers|editor|main|modules|platform|scene|servers|tests)/
+FormatStyle: file
+CheckOptions:
+  modernize-use-bool-literals.IgnoreMacros: false
+  readability-operators-representation.BinaryOperators: "&&;&=;&;|;~;!;!=;||;|=;^;^="
