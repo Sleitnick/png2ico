@@ -1,11 +1,4 @@
 {
-	"files.associations": {
-		"type_traits": "c",
-		"limits": "c",
-		"ratio": "c",
-		"tuple": "c",
-		"variant": "c"
-	},
 	"C_Cpp.formatting": "clangFormat",
 	"C_Cpp.default.cStandard": "c99",
 	"C_Cpp.intelliSenseEngine": "disabled",
@@ -16,10 +9,5 @@
 	"[cpp]": {
 		"editor.formatOnSave": true,
 		"editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd"
-	},
-	"luau-lsp.types.definitionFiles": {
-		"types": "types.d.lua"
-	},
-	"luau-lsp.sourcemap.enabled": false,
-	"stylua.targetReleaseVersion": "latest"
+	}
 }
