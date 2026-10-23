@@ -61,6 +61,7 @@ error_t buffer_open(const char* filepath, Buffer* buf, int mode) {
 void buffer_close(Buffer* buf) {
 	if (buf->f != NULL) {
 		fclose(buf->f);
+		buf->f = NULL;
 	}
 }
 
