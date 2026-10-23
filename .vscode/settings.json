@@ -1,4 +1,7 @@
 {
+	"files.eol": "\n",
+	"files.insertFinalNewline": true,
+	"files.trimFinalNewlines": true,
 	"C_Cpp.formatting": "clangFormat",
 	"C_Cpp.default.cStandard": "c99",
 	"C_Cpp.intelliSenseEngine": "disabled",
