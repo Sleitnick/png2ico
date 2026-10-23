@@ -37,6 +37,7 @@ jobs:
       - name: Build
         run: cmake --build out -j --config Debug
       - name: Test
+        shell: bash
         run: |
           cd test
           if [ "${{ matrix.host }}" = "windows" ]; then
