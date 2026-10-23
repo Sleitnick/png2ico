@@ -3,12 +3,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-#ifdef _WIN32
-#include <errno.h>
-#endif
-
 #define ASSERT_READ(f, bytes_read, expected_size) \
 	(bytes_read < expected_size ? (feof(f) ? ERR_EOF : ferror(f) ? ERR_READ : OK) : OK)
+
 #define ASSERT_WRITE(f, bytes_written, expected_size) \
 	(bytes_written < expected_size ? (feof(f) ? ERR_EOF : ferror(f) ? ERR_WRITE : OK) : OK)
 
